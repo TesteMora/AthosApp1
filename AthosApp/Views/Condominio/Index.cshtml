@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Condominio";
+}
+
+<div class="row">
+    <div class="col-md-1">
+        <a href="@Url.Action("Index","Home")" class="btn btn-block btn-danger">Voltar</a>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <h2>Condominio</h2>
+        <div class="col-md-4">
+            <a href="~/Condominio/Criar" class="btn btn-block btn-primary">Criar</a>
+        </div>
+    </div>
+    <div class="datatable">
+
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/Areas/Condominio.js"></script>
+<script type="text/javascript">
+    $.CondomonioAPI.Init()
+</script>

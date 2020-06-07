@@ -133,10 +133,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Controllers\AssuntoController.cs" />
+    <Compile Include="Areas\Controllers\CondominioController.cs" />
+    <Compile Include="Areas\Controllers\EnvioController.cs" />
+    <Compile Include="Areas\Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Administradora.cs" />
+    <Compile Include="Models\Assunto.cs" />
+    <Compile Include="Models\Condominio.cs" />
+    <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -148,8 +157,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Areas\EnviarEmail.js" />
+    <Content Include="Scripts\Areas\Usuario.js" />
+    <Content Include="Scripts\Areas\Condominio.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Condominio\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -175,10 +189,13 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Assunto\Index.cshtml" />
+    <Content Include="Views\Envio\Index.cshtml" />
+    <Content Include="Views\Condominio\Criar.cshtml" />
+    <Content Include="Views\Usuario\Criar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
