@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AthosApp.Database;
+using AthosApp.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,17 +30,52 @@ namespace AthosApp.Areas
 
         // POST: Condominio/Create
         [HttpPost]
-        public ActionResult CriarCondominio(int idCondo, string nomeCondominio, int resposavel, int administradora)
+        public bool CriarCondominio(int idCondo, string nomeCondominio, int resposavel, int administradora)
         {
             try
             {
-                // TODO: Inserir num arquivo json?
-
-                return RedirectToAction("Index");
+                LiteDBClass.InsertObject(new Condominio()
+                {
+                    IdAdministradora = administradora,
+                    Responsavel = (TipoUsuario)resposavel,
+                    NomeCondominio = nomeCondominio,
+                }, Objetos.Condominio);
+                return true;
             }
             catch
             {
-                return View();
+                return false;
+            }
+        }
+
+        [HttpGet]
+        public string ListarAdm()
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(LiteDBClass.ListarTodasAdministradoras());
+                return json;
+            }
+            catch(Exception e)
+            {
+                return "";
+            }
+        }
+
+        [HttpPost]
+        public bool CreateAdm(string NomeAdministradora)
+        {
+
+            try
+            {
+                Administradora administradora = new Administradora();
+                administradora.NomeAdministradora = NomeAdministradora;
+                LiteDBClass.InsertObject(administradora, Objetos.Administradora);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
 
@@ -69,8 +107,7 @@ namespace AthosApp.Areas
         {
             try
             {
-                // TODO: Add delete logic here
-
+                LiteDBClass.DeleteObject(id, Objetos.Assunto);
                 return RedirectToAction("Index");
             }
             catch

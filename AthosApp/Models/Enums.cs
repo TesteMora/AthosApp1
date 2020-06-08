@@ -18,4 +18,12 @@ namespace AthosApp.Models
         Administrativo = 1,
         Condominal = 2
     }
+
+    public enum Objetos
+    {
+        Administradora, 
+        Assunto,
+        Condominio, 
+        Usuario,
+    }
 }

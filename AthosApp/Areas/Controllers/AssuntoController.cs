@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AthosApp.Database;
 
 namespace AthosApp.Areas
 {
@@ -14,8 +15,7 @@ namespace AthosApp.Areas
         {
             return View();
         }
-
-
+        
         [HttpGet]
         public List<Assunto> List(){
             return new List<Assunto>();
@@ -35,12 +35,14 @@ namespace AthosApp.Areas
 
         // POST: Assunto/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(int tipoAssunto)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                LiteDBClass.InsertObject(new Assunto()
+                {
+                    TipoAssunto = (TipoAssunto)tipoAssunto,
+                }, Objetos.Assunto);
                 return RedirectToAction("Index");
             }
             catch
@@ -48,6 +50,8 @@ namespace AthosApp.Areas
                 return View();
             }
         }
+
+        
 
         // GET: Assunto/Edit/5
         public ActionResult Edit(int id)
@@ -70,21 +74,14 @@ namespace AthosApp.Areas
                 return View();
             }
         }
-
-        // GET: Assunto/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
+        
         // POST: Assunto/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                LiteDBClass.DeleteObject(id, Objetos.Assunto);
                 return RedirectToAction("Index");
             }
             catch

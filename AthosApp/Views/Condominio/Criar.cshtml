@@ -20,7 +20,7 @@
             <div class="col-md-4">
                 Administradora
                 <select class="form-control" id="selectAdmin">
-                    <option value="-1"></option>
+                    <option value="-1">Selecione...</option>
                 </select>
             </div>
 
@@ -39,10 +39,16 @@
         <div class="col-md-4">
             <button id="submitCondo" class="btn btn-block btn-primary">Criar</button>
         </div>
+
+
+        <div class="col-md-4">
+            <button id="submitAdmin" class="btn btn-block btn-danger">Criar Administradora</button>
+        </div>
     </div>
 </form>
 <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="~/Scripts/Areas/Condominio.js"></script>
 <script type="text/javascript">
-    $.CondominioAPI().Init()
+    $.CondominioAPI().Init();
+    $.CondominioAPI().Methods.popularDropdownAdministradora();
 </script>

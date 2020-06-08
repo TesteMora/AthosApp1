@@ -3,14 +3,17 @@
 
         Init: function () {
             this.Events.BindAll();
+            
         },
         Events:
         {
             BindAll: function () {
                 this.OnClickSalvarCondominio();
+                this.OnClickSalvarAdministradora();
                 this.OnClickEditarCondominio();
                 this.OnClickDeleteCondominio();
             },
+
             OnClickSalvarCondominio: function () {
                 $('#submitCondo').off().on('click', function () {
                     var id = $('#idCondo').val()
@@ -22,14 +25,13 @@
                             idresponsavel = this.value
                         }
                     })
-                    var administradora = $('#divAdmin option')
+                    var administradora = $('#selectAdmin option')
                     var idadministradora = -1
                     administradora.each(function () {
-                        if (this.attr("selected", "true")) {
+                        if (this.selected == true) {
                             idadministradora = this.value
                         }
                     })
-                    debugger;
                     var data = JSON.stringify({ idCondo: id, nomeCondominio: nome, resposavel: idresponsavel, administradora: idadministradora })
                     
                     $.ajax({
@@ -37,6 +39,24 @@
                         contentType: 'application/json',
                         type: 'POST',
                         data: data,
+                        success: function () {
+                            Alert("Condominio cadastrado com sucesso")
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            Alert("Houve um erro ao cadastrar um Condominio")
+                        }
+                    });
+                });
+            },
+            OnClickSalvarAdministradora: function () {
+                $('#submitAdmin').off().on('click', function () {
+                    debugger;
+                    var nome = $('#nomeCondo').val()
+                    $.ajax({
+                        url: '/Condominio/CreateAdm',
+                        contentType: 'application/json',
+                        type: 'POST',
+                        data: JSON.stringify({ NomeAdministradora: nome}),
                         success: function () {
                             Alert("Condominio cadastrado com sucesso")
                         },
@@ -72,6 +92,29 @@
         },
         Methods:
         {
+
+            popularDropdownAdministradora: function () {
+                var dropdown = $("#selectAdmin");
+                $.ajax({
+                    url: '/Condominio/ListarAdm',
+                    contentType: 'application/json',
+                    type: 'GET',
+                    data: JSON.stringify({ }),
+
+                    success: function (data) {
+                        var admins = $.parseJSON(data)
+                        for (var i in admins) {
+                            dropdown.append($("<option />").val(admins[i].Id).text(admins[i].NomeAdministradora));
+                        }
+                        //data.each(function () {
+                        //    dropdown.append($("<option />").val(this.id).text(this.NomeAdministradora));
+                        //});
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Alert("Houve um erro ao cadastrar um Condominio")
+                    }
+                });
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AthosApp.Database;
+using AthosApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,26 +21,29 @@ namespace AthosApp.Areas
         {
             return View();
         }
-
-        // GET: Usuario/Details/5
-        public ActionResult Editar(int id)
+        
+        public ActionResult Editar(string nome)
         {
+            ViewData.Model = LiteDBClass.GetUsuario(nome);
             return View();
         }
 
         // POST: Usuario/Create
         [HttpPost]
-        public ActionResult CriarUsuario (string nomeUsuario, string email, int condominio, int tipoUsuario)
+        public void CriarUsuario (string nomeUsuario, string email, int condominio, int tipoUsuario)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                LiteDBClass.InsertObject(new Usuario()
+                {
+                    Nome = nomeUsuario,
+                    Email = email,
+                    TipoUsuario = (TipoUsuario)tipoUsuario,
+                    IdCondominio = condominio,
+                }, Objetos.Usuario);
             }
             catch
             {
-                return View();
             }
         }
 

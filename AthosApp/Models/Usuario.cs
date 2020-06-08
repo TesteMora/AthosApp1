@@ -9,7 +9,7 @@ namespace AthosApp.Models
     {
         public string Nome { get; set; }
         public string Email { get; set; }
-        public Condominio Condominio { get; set; }
+        public int IdCondominio { get; set; }
         public TipoUsuario TipoUsuario { get; set; }
     }
 }
