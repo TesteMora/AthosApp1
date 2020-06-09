@@ -1,5 +1,6 @@
 ﻿using AthosApp.Database;
 using AthosApp.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,17 @@ namespace AthosApp.Areas
         {
             return View();
         }
-        
-        public ActionResult Editar(string nome)
+
+        [HttpPost]
+        public string GetUsuario(int id)
         {
-            ViewData.Model = LiteDBClass.GetUsuario(nome);
+            return JsonConvert.SerializeObject(LiteDBClass.GetObject(id, Objetos.Usuario));
+        }
+
+
+        public ActionResult Editar(int id)
+        {
+            ViewData.Model = LiteDBClass.GetObject(id, Objetos.Usuario);
             return View();
         }
 
@@ -53,14 +61,26 @@ namespace AthosApp.Areas
             return View();
         }
 
-        // POST: Usuario/Edit/5
+
+        [HttpGet]
+        public string GetUsuarios(int id)
+        {
+            return JsonConvert.SerializeObject(LiteDBClass.GetObject(id, Objetos.Usuario));
+        }
+
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, string nomeUsuario, string email, int condominio, int tipoUsuario)
         {
             try
             {
-                // TODO: Add update logic here
-
+                LiteDBClass.UpdateObject(new Usuario()
+                {
+                    Id =id,
+                    Nome = nomeUsuario,
+                    Email = email,
+                    TipoUsuario = (TipoUsuario)tipoUsuario,
+                    IdCondominio = condominio,
+                }, Objetos.Usuario);
                 return RedirectToAction("Index");
             }
             catch
@@ -69,20 +89,26 @@ namespace AthosApp.Areas
             }
         }
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Usuario/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpGet]
+        public string ListarUsuarios()
         {
             try
             {
-                // TODO: Add delete logic here
-
+                var json = JsonConvert.SerializeObject(LiteDBClass.ListarTodosUsuario());
+                return json;
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
+        
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                LiteDBClass.DeleteObject(id, Objetos.Usuario);
                 return RedirectToAction("Index");
             }
             catch

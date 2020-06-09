@@ -17,8 +17,19 @@
         </div>
     </div>
 </div>
+
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <h2>Usuarios Registrados</h2>
+        <div id="divUsu">
+
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="~/Scripts/Areas/Usuario.js"></script>
 <script type="text/javascript">
-    $.UsuarioAPI.Init()
+    $.UsuarioAPI().Init()
+    $.UsuarioAPI().Methods.popularUsuarios();
 </script>

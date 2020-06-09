@@ -22,9 +22,10 @@ namespace AthosApp.Areas
             return View();
         }
 
-        // GET: Condominio/Details/5
+        // GET: Condominio/Details/
         public ActionResult Editar(int id)
         {
+            ViewData.Model = LiteDBClass.GetObject(id, Objetos.Condominio);
             return View();
         }
 
@@ -49,33 +50,16 @@ namespace AthosApp.Areas
         }
 
         [HttpGet]
-        public string ListarAdm()
+        public string ListarCondos()
         {
             try
             {
-                var json = JsonConvert.SerializeObject(LiteDBClass.ListarTodasAdministradoras());
+                var json = JsonConvert.SerializeObject(LiteDBClass.ListarTodosCondominio());
                 return json;
-            }
-            catch(Exception e)
-            {
-                return "";
-            }
-        }
-
-        [HttpPost]
-        public bool CreateAdm(string NomeAdministradora)
-        {
-
-            try
-            {
-                Administradora administradora = new Administradora();
-                administradora.NomeAdministradora = NomeAdministradora;
-                LiteDBClass.InsertObject(administradora, Objetos.Administradora);
-                return true;
             }
             catch (Exception e)
             {
-                return false;
+                return "";
             }
         }
 
@@ -84,15 +68,26 @@ namespace AthosApp.Areas
         {
             return View();
         }
-
-        // POST: Condominio/Edit/5
+        
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public string GetCondominio(int id)
+        {
+            return JsonConvert.SerializeObject(LiteDBClass.GetObject(id, Objetos.Condominio));
+        }
+        
+        [HttpPost]
+        public ActionResult Edit(int idCondo, string nomeCondominio, int resposavel, int administradora)
         {
             try
             {
-                // TODO: Add update logic here
-
+                LiteDBClass.UpdateObject(new Condominio()
+                {
+                    Id = idCondo,
+                    IdAdministradora = administradora,
+                    Responsavel = (TipoUsuario)resposavel,
+                    NomeCondominio = nomeCondominio,
+                }, Objetos.Condominio);
+                Redirect("/Condominio");
                 return RedirectToAction("Index");
             }
             catch
@@ -102,17 +97,19 @@ namespace AthosApp.Areas
         }
 
         // POST: Condominio/Delete/5
-        [HttpPost]
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             try
             {
-                LiteDBClass.DeleteObject(id, Objetos.Assunto);
+                LiteDBClass.DeleteObject(id, Objetos.Condominio);
+                Redirect("/Condominio");
                 return RedirectToAction("Index");
+
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
     }

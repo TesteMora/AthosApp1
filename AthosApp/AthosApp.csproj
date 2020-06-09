@@ -139,6 +139,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Controllers\AssuntoController.cs" />
     <Compile Include="Areas\Controllers\CondominioController.cs" />
+    <Compile Include="Areas\Controllers\AdministradoraController.cs" />
     <Compile Include="Areas\Controllers\EnvioController.cs" />
     <Compile Include="Areas\Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -198,6 +199,8 @@
     <Content Include="Views\Envio\Index.cshtml" />
     <Content Include="Views\Condominio\Criar.cshtml" />
     <Content Include="Views\Usuario\Criar.cshtml" />
+    <Content Include="Views\Condominio\Editar.cshtml" />
+    <Content Include="Views\Usuario\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

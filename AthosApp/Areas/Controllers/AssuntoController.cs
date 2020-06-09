@@ -50,31 +50,7 @@ namespace AthosApp.Areas
                 return View();
             }
         }
-
-        
-
-        // GET: Assunto/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Assunto/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        
+               
         // POST: Assunto/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)

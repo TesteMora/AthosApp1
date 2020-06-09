@@ -48,6 +48,8 @@ namespace AthosApp.Database
                             sucesso = true;
                             break;
                     }
+
+                    db.Dispose();
                 }
                 catch (Exception e)
                 {
@@ -59,80 +61,91 @@ namespace AthosApp.Database
 
         public static List<Assunto> ListarTodosAssunto()
         {
-
+            List<Assunto> assList = null; //( ͡° ͜ʖ ͡°)
             using (var db = new LiteDatabase(@"DatabaseAthos.db"))
             {
                 try
                 {
 
                     var assuntos = db.GetCollection<Assunto>("Assuntos");
-                    return assuntos.FindAll().ToList();
+                    assList = assuntos.FindAll().ToList();
                     
                 }
                 catch (Exception e)
                 {
                     return null;
                 }
+                db.Dispose();
             }
+            return assList;
         }
 
         public static List<Condominio> ListarTodosCondominio()
         {
-
+            List<Condominio> condominiosList = null;
             using (var db = new LiteDatabase(@"DatabaseAthos.db"))
             {
                 try
                 {
 
                     var condominios= db.GetCollection<Condominio>("Condominios");
-                    return condominios.FindAll().ToList();
+                    condominiosList =  condominios.FindAll().ToList();
 
                 }
                 catch (Exception e)
                 {
                     return null;
                 }
+                db.Dispose();
             }
+            return condominiosList;
         }
 
         public static List<Usuario> ListarTodosUsuario()
         {
-
+            List<Usuario> usuariosList = null;
             using (var db = new LiteDatabase(@"DatabaseAthos.db"))
             {
                 try
                 {
 
                     var usuarios = db.GetCollection<Usuario>("Usuarios");
-                    return usuarios.FindAll().ToList();
+                    usuariosList = usuarios.FindAll().ToList();
 
                 }
                 catch (Exception e)
                 {
                     return null;
                 }
+                db.Dispose();
             }
+            return usuariosList;
         }
 
         public static List<Administradora> ListarTodasAdministradoras()
         {
+            List<Administradora> admList = null;
             using (var db = new LiteDatabase(@"DatabaseAthos.db"))
             {
                 try
                 {
                     var adm = db.GetCollection<Administradora>("Administradoras");
-                    return adm.FindAll().ToList();
+                    admList = adm.FindAll().ToList();
 
                 }
                 catch (Exception e)
                 {
                     return null;
                 }
+
+                db.Dispose();
             }
+            return admList;
         }
 
         public static object GetObject(int id, Objetos type)
         {
+            object resultObject = null; 
             using (var db = new LiteDatabase(@"DatabaseAthos.db"))
             {
                 try
@@ -142,45 +155,33 @@ namespace AthosApp.Database
                         case Objetos.Assunto:
 
                             var assuntos = db.GetCollection<Assunto>("Assuntos");
-                            var resultA = assuntos.Find(x => x.Id == id).FirstOrDefault();
-                            return resultA;
+                            resultObject = assuntos.Find(x => x.Id == id).FirstOrDefault();
+                            break;
 
                         case Objetos.Condominio:
 
                             var condomonios = db.GetCollection<Condominio>("Condominios");
-                            var resultC = condomonios.Find(x => x.Id == id).FirstOrDefault();
-                            return resultC;
+                            resultObject = condomonios.Find(x => x.Id == id).FirstOrDefault();
+                            break;
 
                         case Objetos.Administradora:
                             var administradoras = db.GetCollection<Administradora>("Administradoras");
-                            var resultAd = administradoras.Find(x => x.Id == id).FirstOrDefault();
-                            return resultAd;
+                            resultObject = administradoras.Find(x => x.Id == id).FirstOrDefault();
+                            break;
+
+                        case Objetos.Usuario:
+                            var usuarios = db.GetCollection<Usuario>("Usuarios");
+                            resultObject = usuarios.Find(x => x.Id == id).FirstOrDefault();
+                            break;
                     }
+                    db.Dispose();
                 }
                 catch (Exception e)
                 {
                     return null;
                 }
             }
-            return null;
-        }
-
-        public static Usuario GetUsuario(string nome)
-        {
-
-            using (var db = new LiteDatabase(@"DatabaseAthos.db"))
-            {
-                try
-                {
-                    var usuarios = db.GetCollection<Usuario>("Usuarios");
-                    var result = usuarios.Find(x => x.Nome == nome).FirstOrDefault();
-                    return result;
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
-            }
+            return resultObject;
         }
 
         public static bool UpdateObject(Object update, Objetos type)
@@ -221,7 +222,7 @@ namespace AthosApp.Database
 
                             Usuario usu = (Usuario)update;
                             var usuarios = db.GetCollection<Usuario>("Usuarios");
-                            var resultU = usuarios.Find(x => x.Nome == usu.Nome).FirstOrDefault();
+                            var resultU = usuarios.Find(x => x.Id == usu.Id).FirstOrDefault();
                             resultU.IdCondominio = usu.IdCondominio;
                             resultU.Email = usu.Email;
                             resultU.TipoUsuario = usu.TipoUsuario;
@@ -238,6 +239,8 @@ namespace AthosApp.Database
                             sucesso = true;
                             break;
                     }
+
+                    db.Dispose();
                 }
                 catch (Exception e)
                 {
@@ -275,26 +278,15 @@ namespace AthosApp.Database
                             administradoras.Delete(id);
                             sucesso = true;
                             break;
-                    }
-                }
-                catch (Exception e)
-                {
-                    return false;
-                }
-            }
-            return sucesso;
-        }
 
-        public static bool DeleteUsuarioByNome(string nome)
-        {
-            var sucesso = false;
-            using (var db = new LiteDatabase(@"DatabaseAthos.db"))
-            {
-                try
-                {
-                    var usuarios = db.GetCollection<Usuario>("Usuarios");
-                    usuarios.DeleteMany("$.Usuarios[@.Nome = " + nome + "]");
-                    sucesso = true;
+                        case Objetos.Usuario:
+                            var usuarios = db.GetCollection<Usuario>("Usuarios");
+                            usuarios.Delete(id);
+                            sucesso = true;
+                            break;
+                    }
+
+                    db.Dispose();
                 }
                 catch (Exception e)
                 {
@@ -303,5 +295,6 @@ namespace AthosApp.Database
             }
             return sucesso;
         }
+        
     }
 }

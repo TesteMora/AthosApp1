@@ -1,1 +1,3 @@
-﻿
+﻿$.EnvioAPI = function () {
+
+}

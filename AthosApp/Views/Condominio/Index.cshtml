@@ -15,12 +15,20 @@
             <a href="~/Condominio/Criar" class="btn btn-block btn-primary">Criar</a>
         </div>
     </div>
-    <div class="datatable">
+</div>
 
+<br/>
+<div class="row" >
+    <div class="col-md-12">
+        <h2>Condominios Registrados</h2>
+        <div id="divCondos">
+
+        </div>
     </div>
 </div>
 <script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="~/Scripts/Areas/Condominio.js"></script>
 <script type="text/javascript">
-    $.CondomonioAPI.Init()
+    $.CondominioAPI().Init();
+    $.CondominioAPI().Methods.popularCondominios();
 </script>
