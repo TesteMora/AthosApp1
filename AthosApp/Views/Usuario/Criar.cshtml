@@ -10,45 +10,56 @@
 <br />
 <form>
     <div class="row">
-        <div class="col-md-12">
-            <h2>Criar</h2>
-            <div class="col-md-4">
-                <input type="text" class="form-control" id="nomeUsu" value="" placeholder="Nome..." />
-            </div>
+        <h2>Criar Usuario</h2>
 
-            <div class="col-md-4">
-                <input id="emailUsu" class="form-control" type="email" value="" placeholder="Email..." />
-            </div>
+        <div class="col-md-4">
+            <h4>Nome</h4>
+            <input type="text" class="form-control" id="nomeUsu" value="" placeholder="Nome..." />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Email</h4>
+            <input id="emailUsu" class="form-control" type="email" value="" placeholder="Email..." />
+        </div>
+    </div>
 
-            <div class="col-md-4">
-                Condominio
-                <select class="form-control" id="condominioSelect">
-                    <option value="-1">Selecione...</option>
-                </select>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Condominio</h4>
+            <select class="form-control" id="condominioSelect">
+                <option value="-1"></option>
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4" id="divTipoUsu">
+            <h4>Tipo de Usuário</h4>
+            <div>
+                Morador
+                <input type="radio" name="tipo" value="1" checked />
             </div>
-
-            <div class="col-md-4" id="divTipoUsu">
-                Tipo de Usuário
-                <div>
-                    Morador
-                    <input type="radio" name="tipo" value="1" checked />
-                </div>
-                <div>
-                    Sindico
-                    <input type="radio" name="tipo" value="2" />
-                </div>
-                <div>
-                    Administradora
-                    <input type="radio" name="tipo" value="3" />
-                </div>
-                <div>
-                    Zelador
-                    <input type="radio" name="tipo" value="4" />
-                </div>
+            <div>
+                Sindico
+                <input type="radio" name="tipo" value="2" />
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-block btn-primary" id="submitUser">Criar</button>
+            <div>
+                Administradora
+                <input type="radio" name="tipo" value="3" />
             </div>
+            <div>
+                Zelador
+                <input type="radio" name="tipo" value="4" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-block btn-primary" id="submitUser">Salvar</button>
         </div>
     </div>
 </form>

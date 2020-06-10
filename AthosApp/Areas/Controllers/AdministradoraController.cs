@@ -45,16 +45,16 @@ namespace AthosApp.Areas
 
         
         [HttpGet]
-        public ActionResult Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
                 LiteDBClass.DeleteObject(id, Objetos.Administradora);
-                return RedirectToAction("Index");
+                return true;
             }
             catch
             {
-                return View();
+                return false;
             }
         }
 

@@ -76,7 +76,7 @@ namespace AthosApp.Areas
         }
         
         [HttpPost]
-        public ActionResult Edit(int idCondo, string nomeCondominio, int resposavel, int administradora)
+        public bool Edit(int idCondo, string nomeCondominio, int resposavel, int administradora)
         {
             try
             {
@@ -88,28 +88,28 @@ namespace AthosApp.Areas
                     NomeCondominio = nomeCondominio,
                 }, Objetos.Condominio);
                 Redirect("/Condominio");
-                return RedirectToAction("Index");
+                return true;
             }
             catch
             {
-                return View();
+                return false;
             }
         }
 
         // POST: Condominio/Delete/5
         [HttpGet]
-        public ActionResult Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
                 LiteDBClass.DeleteObject(id, Objetos.Condominio);
                 Redirect("/Condominio");
-                return RedirectToAction("Index");
+                return true;
 
             }
             catch
             {
-                return RedirectToAction("Index");
+                return false;
             }
         }
     }

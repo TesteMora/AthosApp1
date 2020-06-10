@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AthosApp.Database;
+using Newtonsoft.Json;
 
 namespace AthosApp.Areas
 {
@@ -16,26 +17,9 @@ namespace AthosApp.Areas
             return View();
         }
         
-        [HttpGet]
-        public List<Assunto> List(){
-            return new List<Assunto>();
-        }
-
-        // GET: Assunto/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Assunto/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Assunto/Create
         [HttpPost]
-        public ActionResult Create(int tipoAssunto)
+        public bool Create(int tipoAssunto)
         {
             try
             {
@@ -43,26 +27,40 @@ namespace AthosApp.Areas
                 {
                     TipoAssunto = (TipoAssunto)tipoAssunto,
                 }, Objetos.Assunto);
-                return RedirectToAction("Index");
+                return true;
             }
             catch
             {
-                return View();
+                return false;
             }
         }
-               
+
+        [HttpGet]
+        public string ListarAssuntos()
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(LiteDBClass.ListarTodosAssunto());
+                return json;
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
+
         // POST: Assunto/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
                 LiteDBClass.DeleteObject(id, Objetos.Assunto);
-                return RedirectToAction("Index");
+                return true;
             }
             catch
             {
-                return View();
+                return false;
             }
         }
     }

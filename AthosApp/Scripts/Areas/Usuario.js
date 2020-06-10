@@ -49,7 +49,7 @@
             OnClickAtualizarUsuario: function () {
                 $('#updateUser').off().on('click', function () {
                     debugger;
-                    var id = $('#idUsu')
+                    var id = $('#idUsu').val()
                     var nome = $('#nomeUsu').val()
                     var email = $('#emailUsu').val()
                     var idCondominio = -1;
@@ -63,19 +63,19 @@
                     var tipo = $('#divTipoUsu input')
                     tipo.each(function () {
                         if (this.checked) {
-                            idresponsavel = this.value
+                            tipousuario = this.value
                         }
                     })
                     $.ajax({
-                        url: '/Usuario/Edit',
+                        url: '/Usuario/Atualizar',
                         contentType: 'application/json',
                         type: 'POST',
-                        data: JSON.stringify({ id: id, nomeUsuario: nome, email: email, condominio: idCondominio, tipoUsuario: tipoUsuario }),
+                        data: JSON.stringify({ id: id, nomeUsuario: nome, email: email, condominio: idCondominio, tipoUsuario: tipousuario }),
                         success: function () {
-                            Alert("Usuario cadastrado com sucesso")
+                            alert("Usuario cadastrado com sucesso")
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            Alert("Houve um erro ao cadastrar um Usuario")
+                            alert("Houve um erro ao cadastrar um Usuario")
                         }
                     });
                 });
@@ -84,15 +84,15 @@
                 $('#removeCondo').off().on('click', function () {
                     var id = $('#idUSu')
                     $.ajax({
-                        url: $.UsuarioAPI.urlDelete,
+                        url: '/Usuario/Delete',
                         contentType: 'application/json',
                         type: 'POST',
                         data: JSON.stringify({ idUsu: id}),
                         success: function () {
-                            Alert("Usuario excluido com sucesso")
+                            alert("Usuario excluido com sucesso")
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            Alert("Houve um erro ao excluir um Usuario")
+                            alert("Houve um erro ao excluir um Usuario")
                         }
                     });
                 })
@@ -114,7 +114,55 @@
                         }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        Alert("Houve um erro ao buscar um Condominio")
+                        alert("Houve um erro ao buscar um Condominio")
+                    }
+                });
+            },
+
+            popularCondominiosCarregar: function () {
+                var condoDiv = $("#condominioSelect");
+                $.ajax({
+                    url: '/Condominio/ListarCondos',
+                    contentType: 'application/json',
+                    type: 'GET',
+                    data: JSON.stringify({}),
+                    success: function (data) {
+                        var condos = $.parseJSON(data)
+                        for (var i in condos) {
+                            condoDiv.append($("<option />").val(condos[i].Id).text(condos[i].NomeCondominio));
+                        }
+                        var idusu = parseInt(window.location.pathname.split("/")[3]);
+                        var data = JSON.stringify({ 'id': idusu });
+                        $.ajax({
+                            url: '/Usuario/GetUsuario',
+                            contentType: 'application/json',
+                            type: 'POST',
+                            data: data,
+                            success: function (data) {
+                                var usuario = $.parseJSON(data)
+                                $('#idUsu').val(usuario.Id)
+                                $('#nomeUsu').val(usuario.Nome)
+                                $('#emailUsu').val(usuario.Email)
+                                var condominio = $('#condominioSelect option')
+                                condominio.each(function () {
+                                    if (usuario.IdCondominio == this.value) {
+                                        this.selected = true
+                                    }
+                                });
+                                var tipo = $('#divTipoUsu input')
+                                tipo.each(function () {
+                                    if (usuario.TipoUsuario == this.value) {
+                                        this.checked = true;
+                                    }
+                                })
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert("Houve um erro ao buscar um Usuario")
+                            }
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Houve um erro ao buscar um Condominio")
                     }
                 });
             },
@@ -137,7 +185,7 @@
                         //});
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        Alert("Houve um erro ao buscar um Usuario")
+                        alert("Houve um erro ao buscar um Usuario")
                     }
                 });
             },
@@ -158,20 +206,20 @@
                         $('#emailUsu').val(usuario.Email)
                         var condominio = $('#condominioSelect option')
                         condominio.each(function () {
-                            if (usuario.IdCondominio = this.value) {
+                            if (usuario.IdCondominio == this.value) {
                                 this.selected = true
                             }
                         });
                         var tipo = $('#divTipoUsu input')
                         tipo.each(function () {
-                            if (usuario.TipoUsuario = this.value)
+                            if (usuario.TipoUsuario == this.value)
                             {
                                 this.checked = true; 
                             }
                         })
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        Alert("Houve um erro ao buscar um Usuario")
+                        alert("Houve um erro ao buscar um Usuario")
                     }
                 });
             }

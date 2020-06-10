@@ -57,10 +57,10 @@
                         type: 'POST',
                         data: JSON.stringify({ NomeAdministradora: nome}),
                         success: function () {
-                            Alert("Condominio cadastrado com sucesso")
+                            alert("Condominio cadastrado com sucesso")
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            Alert("Houve um erro ao cadastrar um Condominio")
+                            alert("Houve um erro ao cadastrar um Condominio")
                         }
                     });
                 });
@@ -90,10 +90,10 @@
                         type: 'POST',
                         data: data,
                         success: function () {
-                            Alert("Condominio cadastrado com sucesso")
+                            alert("Condominio atualizado com sucesso")
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            Alert("Houve um erro ao cadastrar um Condominio")
+                            alert("Houve um erro ao atualizar um Condominio")
                         }
                     });
                 });
@@ -113,10 +113,10 @@
                         type: 'POST',
                         data: JSON.stringify({ idCondo: id}),
                         success: function () {
-                            Alert("Condominio excluido com sucesso")
+                            alert("Condominio excluido com sucesso")
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            Alert("Houve um erro ao excluir um Condominio")
+                            alert("Houve um erro ao excluir um Condominio")
                         }
                     });
                 })
@@ -138,12 +138,9 @@
                         for (var i in admins) {
                             dropdown.append($("<option />").val(admins[i].Id).text(admins[i].NomeAdministradora));
                         }
-                        //data.each(function () {
-                        //    dropdown.append($("<option />").val(this.id).text(this.NomeAdministradora));
-                        //});
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        Alert("Houve um erro ao cadastrar um Condominio")
+                        alert("Houve um erro ao cadastrar um Condominio")
                     }
                 });
             },
@@ -160,12 +157,9 @@
                         for (var i in condos) {
                             condoDiv.append($("<div class='row'><div class='col-md-3'><a class='btn btn-block btn-default' href='/Condominio/Editar/" + condos[i].Id + "'> Editar " + condos[i].NomeCondominio + "</a></div><div class='col-md-3'><a class='btn btn-block btn-danger' href='/Condominio/Delete/" + condos[i].Id + "'> Excluir " + condos[i].NomeCondominio + "</a></div></div><br/>"));
                         }
-                        //data.each(function () {
-                        //    dropdown.append($("<option />").val(this.id).text(this.NomeAdministradora));
-                        //});
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        Alert("Houve um erro ao cadastrar um Condominio")
+                        alert("Houve um erro ao cadastrar um Condominio")
                     }
                 });
             },
@@ -197,7 +191,7 @@
                          })
                      },
                      error: function (XMLHttpRequest, textStatus, errorThrown) {
-                         Alert("Houve um erro ao buscar um Condominio")
+                         alert("Houve um erro ao buscar um Condominio")
                      }
                  });
             }

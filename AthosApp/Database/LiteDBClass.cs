@@ -69,7 +69,7 @@ namespace AthosApp.Database
 
                     var assuntos = db.GetCollection<Assunto>("Assuntos");
                     assList = assuntos.FindAll().ToList();
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -88,8 +88,8 @@ namespace AthosApp.Database
                 try
                 {
 
-                    var condominios= db.GetCollection<Condominio>("Condominios");
-                    condominiosList =  condominios.FindAll().ToList();
+                    var condominios = db.GetCollection<Condominio>("Condominios");
+                    condominiosList = condominios.FindAll().ToList();
 
                 }
                 catch (Exception e)
@@ -145,7 +145,7 @@ namespace AthosApp.Database
 
         public static object GetObject(int id, Objetos type)
         {
-            object resultObject = null; 
+            object resultObject = null;
             using (var db = new LiteDatabase(@"DatabaseAthos.db"))
             {
                 try
@@ -226,7 +226,7 @@ namespace AthosApp.Database
                             resultU.IdCondominio = usu.IdCondominio;
                             resultU.Email = usu.Email;
                             resultU.TipoUsuario = usu.TipoUsuario;
-
+                            resultU.Nome = usu.Nome;
                             usuarios.Update(resultU);
                             sucesso = true;
                             break;
@@ -295,6 +295,59 @@ namespace AthosApp.Database
             }
             return sucesso;
         }
-        
+
+        public static bool EnviarEmail(int idAssunto, int idUsuario, string corpoEmail)
+        {
+            var sucesso = false;
+            using (var db = new LiteDatabase(@"DatabaseAthos.db"))
+            {
+                try
+                {
+
+                    var assuntos = db.GetCollection<Assunto>("Assuntos");
+                    var assunto = assuntos.FindById(idAssunto);
+
+                    var usuarios = db.GetCollection<Usuario>("Usuarios");
+                    var usuario = usuarios.FindById(idUsuario);
+                    
+                    var condomonios = db.GetCollection<Condominio>("Condominios");
+                    var condominio = condomonios.FindById(usuario.IdCondominio);
+
+                    string destinatario = "";
+
+                    if (assunto.TipoAssunto == TipoAssunto.Administrativo)
+                    {
+                        var administradoras = db.GetCollection<Administradora>("Administradoras");
+                        var administradora = administradoras.FindById(condominio.IdAdministradora);
+
+                        destinatario = administradora.NomeAdministradora;
+                    }
+                    else //Tipo 
+                    {
+                        //Aqui teria o if de responsavel ser Sindico ou Zelador, porém condominio salva TipoUsuario no responsável
+                        destinatario = condominio.Responsavel.ToString();
+                    }
+
+                    //"Enviar" email
+                    var emails = db.GetCollection<Email>("LogEmails");
+                    Email email = new Email()
+                    {
+                        Remetente = usuario.Email,
+                        Destinatario = destinatario,
+                        Assunto = assunto.TipoAssunto.ToString(),
+                        Corpo = corpoEmail,
+                    };
+                    emails.Insert(email);
+                    sucesso = true;
+                    db.Dispose();
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+            return sucesso;
+
+        }
     }
 }

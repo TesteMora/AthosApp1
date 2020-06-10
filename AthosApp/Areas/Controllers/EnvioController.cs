@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AthosApp.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,17 +17,16 @@ namespace AthosApp.Areas
         
         // POST: Envio/Create
         [HttpPost]
-        public ActionResult Enviar()
+        public bool Enviar(int idAssunto, int idUsuario, string corpoEmail)
         {
             try
             {
-                // TODO: inserir metodo de Litedb
-
-                return RedirectToAction("Index");
+                LiteDBClass.EnviarEmail(idAssunto, idUsuario, corpoEmail);
+                return true;
             }
             catch
             {
-                return View();
+                return false;
             }
         }
         

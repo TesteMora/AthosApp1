@@ -38,7 +38,7 @@ namespace AthosApp.Areas
 
         // POST: Usuario/Create
         [HttpPost]
-        public void CriarUsuario (string nomeUsuario, string email, int condominio, int tipoUsuario)
+        public bool CriarUsuario (string nomeUsuario, string email, int condominio, int tipoUsuario)
         {
             try
             {
@@ -49,9 +49,11 @@ namespace AthosApp.Areas
                     TipoUsuario = (TipoUsuario)tipoUsuario,
                     IdCondominio = condominio,
                 }, Objetos.Usuario);
+                return true;
             }
             catch
             {
+                return false;
             }
         }
 
@@ -69,7 +71,7 @@ namespace AthosApp.Areas
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, string nomeUsuario, string email, int condominio, int tipoUsuario)
+        public bool Atualizar(int id, string nomeUsuario, string email, int condominio, int tipoUsuario)
         {
             try
             {
@@ -81,11 +83,11 @@ namespace AthosApp.Areas
                     TipoUsuario = (TipoUsuario)tipoUsuario,
                     IdCondominio = condominio,
                 }, Objetos.Usuario);
-                return RedirectToAction("Index");
+                return true;
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return false;
             }
         }
 
@@ -103,17 +105,17 @@ namespace AthosApp.Areas
             }
         }
         
-        [HttpPost]
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public bool Delete(int id)
         {
             try
             {
                 LiteDBClass.DeleteObject(id, Objetos.Usuario);
-                return RedirectToAction("Index");
+                return true;
             }
             catch
             {
-                return View();
+                return false;
             }
         }
     }
