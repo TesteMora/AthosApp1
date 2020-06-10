@@ -9,7 +9,7 @@ A arquitetura das telas é bem simples, utilizando Jquery para comunicar com a A
 
 Para rodar o sistema, abra a Solution (.sln) no Visual studio e clique Executar (F5) para o sistema abrir uma página nova no navegador
 
-Dentro da página há 4 botões, cada um responsável por uma parte do sistema. Vou explicar cada uma delas em detalhe
+Dentro da página inicial há 4 botões, cada um responsável por uma parte do sistema. Vou explicar cada uma delas em detalhe
 
 
 ### Condominio
