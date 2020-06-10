@@ -40,6 +40,8 @@ namespace AthosApp.Areas
         {
             try
             {
+                //Create(1);
+                //Create(2);
                 var json = JsonConvert.SerializeObject(LiteDBClass.ListarTodosAssunto());
                 return json;
             }
