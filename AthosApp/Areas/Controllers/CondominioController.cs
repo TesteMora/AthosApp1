@@ -28,6 +28,7 @@ namespace AthosApp.Areas
             ViewData.Model = LiteDBClass.GetObject(id, Objetos.Condominio);
             return View();
         }
+        
 
         // POST: Condominio/Create
         [HttpPost]
@@ -87,7 +88,6 @@ namespace AthosApp.Areas
                     Responsavel = (TipoUsuario)resposavel,
                     NomeCondominio = nomeCondominio,
                 }, Objetos.Condominio);
-                Redirect("/Condominio");
                 return true;
             }
             catch
@@ -98,18 +98,17 @@ namespace AthosApp.Areas
 
         // POST: Condominio/Delete/5
         [HttpGet]
-        public bool Delete(int id)
+        public ActionResult Delete(int id)
         {
             try
             {
                 LiteDBClass.DeleteObject(id, Objetos.Condominio);
-                Redirect("/Condominio");
-                return true;
+                return View("Index");
 
             }
             catch
             {
-                return false;
+                return View("Index");
             }
         }
     }

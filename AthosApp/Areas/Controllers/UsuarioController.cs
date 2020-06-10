@@ -106,16 +106,16 @@ namespace AthosApp.Areas
         }
         
         [HttpGet]
-        public bool Delete(int id)
+        public ActionResult Delete(int id)
         {
             try
             {
                 LiteDBClass.DeleteObject(id, Objetos.Usuario);
-                return true;
+                return View("Index");
             }
             catch
             {
-                return false;
+                return View("Index");
             }
         }
     }

@@ -101,8 +101,10 @@ namespace AthosApp.Tests.Controllers
             }
 
             Assert.IsTrue(result);
+            
+            ViewResult resultView = controller.Delete(condominioEditado.Id) as ViewResult;
 
-            result = controller.Delete(condominioEditado.Id);
+            Assert.IsNotNull(resultView);
 
             if (LiteDBClass.ListarTodosCondominio().Count != condominios.Count())
                 Assert.Fail();

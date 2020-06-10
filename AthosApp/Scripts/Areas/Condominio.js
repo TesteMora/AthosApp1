@@ -40,10 +40,10 @@
                         type: 'POST',
                         data: data,
                         success: function () {
-                            Alert("Condominio cadastrado com sucesso")
+                            alert("Condominio cadastrado com sucesso")
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            Alert("Houve um erro ao cadastrar um Condominio")
+                            alert("Houve um erro ao cadastrar um Condominio")
                         }
                     });
                 });

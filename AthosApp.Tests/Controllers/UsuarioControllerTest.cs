@@ -103,7 +103,9 @@ namespace AthosApp.Tests.Controllers
 
             Assert.IsTrue(result);
 
-            result = controller.Delete(usuarioEditado.Id);
+            ViewResult resultView = controller.Delete(usuarioEditado.Id) as ViewResult;
+            
+            Assert.IsNotNull(resultView);
 
             if (LiteDBClass.ListarTodosUsuario().Count != usuarios.Count())
                 Assert.Fail();
